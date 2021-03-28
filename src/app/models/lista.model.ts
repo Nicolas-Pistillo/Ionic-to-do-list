@@ -8,7 +8,7 @@ export class Lista {
     completada:boolean;
     items: ListaItem[];
 
-    constructor(titulo:string,) {
+    constructor(titulo:string) {
         this.titulo = titulo;
         this.creadaEn = new Date();
         this.completada = false;

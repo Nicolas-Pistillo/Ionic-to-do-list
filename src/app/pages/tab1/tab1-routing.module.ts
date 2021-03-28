@@ -9,7 +9,7 @@ const routes: Routes = [
     component: Tab1Page,
   },
   {
-    path:'agregar',
+    path:'agregar/:id',
     component: AgregarPage
   }
 ];
