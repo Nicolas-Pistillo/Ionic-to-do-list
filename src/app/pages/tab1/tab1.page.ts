@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { Lista } from 'src/app/models/lista.model';
 import { DeseosService } from 'src/app/services/deseos.service';
 import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab1',
@@ -10,14 +10,41 @@ import { Router } from '@angular/router';
 })
 export class Tab1Page {
 
-  listas:Lista[];
+  constructor(private deseoService:DeseosService, 
+              private router:Router,
+              private alertCtrl:AlertController) {}
 
-  constructor(private deseoService:DeseosService, private router:Router) {
-      this.listas = this.deseoService.listas;
+  verItems(id:number) {
+    this.router.navigateByUrl('tabs/tab1/agregar/' + id)
   }
 
-  irAgregar() {
-    this.router.navigate(['tabs/tab1/agregar']);
-  }
+  async agregar() {
+
+        const alert = await this.alertCtrl.create({
+          header: 'Agregar nueva lista',
+          buttons: [{
+            text: 'Cancelar',
+            role: 'cancel',
+          },
+          {
+            text: 'Crear',
+            handler: (data) => {
+              if (data.titulo.length === 0 ) {
+                return;
+              } else {
+                let listaId = this.deseoService.crearLista(data.titulo);
+                this.router.navigateByUrl(`tabs/tab1/agregar/${listaId}`);
+              }
+            }
+          }],
+          inputs: [
+            {
+              name: 'titulo',
+              type: 'text',
+              placeholder: 'Escribe el nombre aqui'
+            }]
+        })
+        alert.present();
+      }
 
 }
