@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Tab1Page } from './tab1.page';
 import { AgregarPage } from '../agregar/agregar.page';
+import { AgregarPageModule } from '../agregar/agregar.module';
 
 const routes: Routes = [
   {
@@ -10,7 +11,7 @@ const routes: Routes = [
   },
   {
     path:'agregar/:id',
-    component: AgregarPage
+    loadChildren: () => import('../agregar/agregar.module').then(m => AgregarPageModule)
   }
 ];
 

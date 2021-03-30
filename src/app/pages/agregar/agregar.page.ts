@@ -21,22 +21,36 @@ export class AgregarPage implements OnInit {
     this.listaRecibida = this.deseoService.obtenerLista(Number(idLista));
   }
 
-  goHome() {
-    this.router.navigate(['tabs/tab1']);
-  }
-
   agregarItem() {
-    if (this.nombreItem !== '') {
+    if (this.nombreItem.length > 3) {
       const nuevoItem = new ListaItem(this.nombreItem);
       this.listaRecibida.items.push(nuevoItem);
       this.deseoService.guardarStorage();
       this.nombreItem = '';
+    } else {
+      return;
     }
-
   }
 
-  cambioCheck(item:ListaItem) {
-    console.log(item);
+  borrarItem(index:number) {
+    this.listaRecibida.items.splice(index,1);
+    this.deseoService.guardarStorage();
+  }
+
+  cambioCheck() {
+
+    const pendientes = this.listaRecibida.items.filter(itemData => !itemData.completado).length
+
+    if (pendientes === 0) {
+      this.listaRecibida.completada = true;
+      this.listaRecibida.terminadaEn = new Date();
+    } else {
+      this.listaRecibida.completada = false;
+      this.listaRecibida.terminadaEn = null;
+    }
+
+    this.deseoService.guardarStorage();
+
   }
 
   ngOnInit() {
