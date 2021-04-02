@@ -8,43 +8,38 @@ import { AlertController } from '@ionic/angular';
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss']
 })
+
 export class Tab1Page {
 
-  constructor(private deseoService:DeseosService, 
-              private router:Router,
-              private alertCtrl:AlertController) {}
-
-  verItems(id:number) {
-    this.router.navigateByUrl('tabs/tab1/agregar/' + id)
-  }
+  constructor(private deseosService: DeseosService,private router:Router,private alertCtrl:AlertController) {}
 
   async agregar() {
 
-        const alert = await this.alertCtrl.create({
-          header: 'Agregar nueva lista',
-          buttons: [{
-            text: 'Cancelar',
-            role: 'cancel',
-          },
-          {
-            text: 'Crear',
-            handler: (data) => {
-              if (data.titulo.length === 0 ) {
-                return;
-              } else {
-                let listaId = this.deseoService.crearLista(data.titulo);
-                this.router.navigateByUrl(`tabs/tab1/agregar/${listaId}`);
-              }
-            }
-          }],
-          inputs: [
-            {
-              name: 'titulo',
-              type: 'text',
-              placeholder: 'Escribe el nombre aqui'
-            }]
-        })
-        alert.present();
-      }
-
+    const alert = await this.alertCtrl.create({
+      header: 'Agregar nueva lista',
+      buttons: [{
+        text: 'Cancelar',
+        role: 'cancel',
+      },
+      {
+        text: 'Crear',
+        handler: (data) => {
+          if (data.titulo.length === 0 ) {
+            return;
+          } else {
+            let listaId = this.deseosService.crearLista(data.titulo);
+            this.router.navigateByUrl(`tabs/tab1/agregar/${listaId}`);
+          }
+        }
+      }],
+      inputs: [
+        {
+          name: 'titulo',
+          type: 'text',
+          placeholder: 'Escribe el nombre aqui'
+        }]
+    })
+    
+    alert.present();
+  }
 }
