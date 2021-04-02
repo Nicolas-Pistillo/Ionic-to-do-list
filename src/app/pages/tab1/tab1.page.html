@@ -8,14 +8,7 @@
 
 <ion-content>
 
-  <app-listas></app-listas>
-
-  <ion-list class="animated fadeInDown">
-    <ion-item detail *ngFor="let lista of deseoService.listas">
-      <ion-label (click)="verItems(lista.id)" >{{lista.titulo}} ({{lista.creadaEn | date:'d-M-y'}})</ion-label>
-      <ion-note slot="end" color="primary">{{lista.items.length}} items</ion-note>
-    </ion-item>
-  </ion-list>
+  <app-listas [terminada]="false"></app-listas>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="agregar()">
     <ion-fab-button>
