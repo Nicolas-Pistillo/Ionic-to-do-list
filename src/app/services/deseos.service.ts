@@ -24,6 +24,20 @@ export class DeseosService {
     return this.listas.find( listaData => listaData.id === id);
   }
 
+  cambiarNombre(id:number,nuevoTitulo:string) {
+    let listaEncontrada = this.listas.find(lista => lista.id === id);
+    listaEncontrada.titulo = nuevoTitulo;
+
+    this.guardarStorage();
+
+  }
+
+  borrarLista(lista:Lista) {
+    this.listas = this.listas.filter(itemList => itemList.id != lista.id);
+
+    this.guardarStorage();
+  }
+
   guardarStorage() {
     localStorage.setItem('data',JSON.stringify(this.listas));
   }
